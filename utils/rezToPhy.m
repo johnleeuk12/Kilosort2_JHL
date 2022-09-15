@@ -130,6 +130,10 @@ if ~isempty(savePath)
     fclose(fileIDCP);
     fclose(fileIDA);
     
+    % modification for t_range bug
+    writeNPY(spikeTimes, fullfile(savePath, 'spike_times_original.npy'));
+    spikeTimes = spikeTimes - uint64(rez.ops.trange(1) * rez.ops.fs);
+    % modification end
     
     writeNPY(spikeTimes, fullfile(savePath, 'spike_times.npy'));
     writeNPY(uint32(spikeTemplates-1), fullfile(savePath, 'spike_templates.npy')); % -1 for zero indexing
